@@ -1,0 +1,22 @@
+# Model configuration — YOLOv11 Nano (selected for edge deployment)
+
+models:
+  yolov11n:
+    name: "YOLOv11 Nano"
+    weights: "yolo11n.pt"
+    params_m: 2.6
+    size_mb: 5.4
+    map50_typical: 0.39
+    fps_gpu_typical: 130
+    fps_cpu_typical: 18
+    pi4_compatible: true
+    pi5_compatible: true
+
+selected_model: yolov11n
+selected_weights: yolo11n.pt
+
+inference:
+  confidence_threshold: 0.45
+  iou_threshold: 0.50
+  max_detections: 50
+  input_size: 640

@@ -1,0 +1,55 @@
+# Dataset configuration for traffic sign detection pipeline
+
+datasets:
+  gtsrb:
+    name: "German Traffic Sign Recognition Benchmark"
+    type: classification
+    url: "https://benchmark.ini.rub.de/gtsrb_dataset.html"
+    local_path: "data/raw/gtsrb"
+    num_classes: 43
+    num_images: 51839
+    suitability_indian: low
+    notes: "Classification only (no bounding boxes). Useful for sign appearance priors and synthetic augmentation."
+
+  indian_traffic_sign:
+    name: "Indian Traffic Sign Dataset"
+    type: detection
+    local_path: "data/raw/indian_traffic_sign"
+    num_classes: varies
+    suitability_indian: high
+    notes: "Directly relevant to Indian road environments. Primary source for Indian sign appearance."
+
+  mapillary:
+    name: "Mapillary Traffic Sign Dataset"
+    type: detection
+    url: "https://www.mapillary.com/dataset/trafficsign"
+    local_path: "data/raw/mapillary"
+    num_classes: 100+
+    num_images: 100000
+    suitability_indian: medium
+    notes: "Large-scale detection with high annotation quality. Requires label mapping to our 20 classes."
+
+  kaggle_preprocessed:
+    name: "Traffic Signs Preprocessed (Kaggle)"
+    type: classification
+    url: "https://www.kaggle.com/datasets/valentynsichkar/traffic-signs-preprocessed"
+    local_path: "data/raw/kaggle_preprocessed"
+    num_classes: 43
+    suitability_indian: low
+    notes: "Preprocessed GTSRB-style classification data. Convert to pseudo-detection via full-image boxes."
+
+# Recommended merge strategy
+strategy:
+  primary_detection: ["indian_traffic_sign", "mapillary"]
+  supplementary_classification: ["gtsrb", "kaggle_preprocessed"]
+  train_ratio: 0.80
+  val_ratio: 0.10
+  test_ratio: 0.10
+  min_samples_per_class: 50
+  max_duplicate_hash_distance: 5
+  balance_strategy: "oversample_underrepresented"
+
+processed:
+  output_dir: "data/processed"
+  yolo_format: true
+  image_size: 640
