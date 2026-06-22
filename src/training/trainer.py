@@ -63,6 +63,7 @@ class TrafficSignTrainer:
 
     params = {k: v for k, v in self.train_params.items() if k != "data"}
     params.update(override_params)
+    params["project"] = str(self.project_dir.resolve())
 
     if "device" in params:
       device_val = params["device"]
