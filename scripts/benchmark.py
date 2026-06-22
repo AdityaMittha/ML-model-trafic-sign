@@ -101,6 +101,11 @@ def benchmark_model(data_yaml: str, output_dir: Path) -> dict:
   return results
 
 
+def benchmark_model_variants(data_yaml: str, output_dir: Path) -> dict:
+  """Alias for backwards compatibility with the Colab notebook."""
+  return benchmark_model(data_yaml, output_dir)
+
+
 def main():
   parser = argparse.ArgumentParser(description="Benchmark traffic sign models")
   parser.add_argument("--data", type=str, default="data/processed/dataset.yaml")
