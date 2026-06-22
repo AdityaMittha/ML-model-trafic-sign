@@ -26,7 +26,7 @@ class TrafficSignDetector:
     model_path: str,
     conf: Optional[float] = None,
     iou: Optional[float] = None,
-    device: str = "",
+    device: Union[int, str] = "",
   ):
     import torch
 
@@ -37,10 +37,16 @@ class TrafficSignDetector:
     self.conf = conf or inference_cfg.get("confidence_threshold", 0.45)
     self.iou = iou or inference_cfg.get("iou_threshold", 0.50)
     self.class_names = get_class_names()
-    if device and device not in ("cpu", "CPU") and not torch.cuda.is_available():
-      logger.warning("CUDA is not available. Falling back to device='cpu'.")
-      device = "cpu"
-    self.device = device
+    
+    if device is not None and device != "":
+      device_str = str(device)
+      if device_str not in ("cpu", "CPU") and not torch.cuda.is_available():
+        logger.warning("CUDA is not available. Falling back to device='cpu'.")
+        self.device = "cpu"
+      else:
+        self.device = device_str
+    else:
+      self.device = "cpu" if not torch.cuda.is_available() else "0"
     self._fps_history: List[float] = []
     self._latency_history: List[float] = []
 
