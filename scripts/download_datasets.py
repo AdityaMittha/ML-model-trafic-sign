@@ -66,8 +66,8 @@ def main():
 
   if args.kaggle or args.all:
     download_kaggle_dataset(
-      "valentynsichkar/traffic-signs-preprocessed",
-      DATA_RAW / "kaggle_preprocessed",
+      "adityabayhaqie/indonesia-traffic-sign-dataset-yolov11",
+      DATA_RAW / "indonesia_traffic_sign",
     )
 
 

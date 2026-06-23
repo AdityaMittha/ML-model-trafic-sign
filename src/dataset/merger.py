@@ -133,10 +133,6 @@ class DatasetMerger:
       if not label_path.exists():
         continue
 
-      img = cv2.imread(str(img_path))
-      if img is None:
-        continue
-
       new_lines = []
       with open(label_path, "r") as f:
         for line in f:
@@ -154,7 +150,7 @@ class DatasetMerger:
         continue
 
       stem = f"{prefix}_{img_path.stem}"
-      cv2.imwrite(str(split_images_dir / f"{stem}.jpg"), img)
+      shutil.copy2(img_path, split_images_dir / f"{stem}{img_path.suffix}")
       with open(split_labels_dir / f"{stem}.txt", "w") as f:
         f.write("\n".join(new_lines) + "\n")
       count += 1
@@ -297,30 +293,16 @@ class DatasetMerger:
     sources = sources or {}
     raw_base = DATA_DIR / "raw"
 
-    if "gtsrb" in sources or (raw_base / "gtsrb").exists():
-      src = sources.get("gtsrb", raw_base / "gtsrb" / "Train")
-      self.import_gtsrb_or_kaggle(src, staging_img, staging_lbl, "gtsrb")
-
-    if "kaggle" in sources or (raw_base / "kaggle_preprocessed").exists():
-      src = sources.get("kaggle", raw_base / "kaggle_preprocessed" / "train")
-      self.import_gtsrb_or_kaggle(src, staging_img, staging_lbl, "kaggle")
-
-    indian_path = sources.get("indian", raw_base / "indian_traffic_sign")
-    if indian_path.exists():
-      for split in ("train", "val", "test", ""):
-        img_sub = indian_path / split / "images" if split else indian_path / "images"
-        lbl_sub = indian_path / split / "labels" if split else indian_path / "labels"
+    # Import Indonesia Traffic Sign Dataset
+    indonesia_path = sources.get("indonesia_traffic_sign", raw_base / "indonesia_traffic_sign")
+    if indonesia_path.exists():
+      for split in ("train", "valid", "test"):
+        img_sub = indonesia_path / split / "images"
+        lbl_sub = indonesia_path / split / "labels"
         if img_sub.exists() and lbl_sub.exists():
-          self.import_yolo_dataset(img_sub, lbl_sub, staging_img, staging_lbl, "indian")
+          self.import_yolo_dataset(img_sub, lbl_sub, staging_img, staging_lbl, f"indo_{split}")
 
-    mapillary_path = sources.get("mapillary", raw_base / "mapillary")
-    if mapillary_path.exists():
-      img_sub = mapillary_path / "images"
-      lbl_sub = mapillary_path / "labels"
-      if img_sub.exists() and lbl_sub.exists():
-        self.import_yolo_dataset(img_sub, lbl_sub, staging_img, staging_lbl, "map")
-
-    self.cleaner.clean_dataset(staging_img, staging_lbl)
+    self.cleaner.clean_dataset(staging_img, staging_lbl, remove_duplicates=False, remove_corrupted=False, validate_labels=False)
 
     strategy_cfg = self.cfg.get("strategy", {})
     self.balance_classes(

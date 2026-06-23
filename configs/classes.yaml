@@ -1,96 +1,49 @@
-# Indian Traffic Sign Classes - 20 target classes
-# Designed for easy extension: add new entries under 'classes' and update 'num_classes'
+ # Translated Traffic Sign Classes - 40 target classes
+# Mapped from Indonesian to standard Indian/English traffic sign names
 
-num_classes: 20
+num_classes: 40
 
 classes:
-  0: Stop
-  1: No Entry
-  2: Left Turn
-  3: Right Turn
-  4: U-Turn
-  5: No Horn
-  6: School Zone
-  7: Pedestrian Crossing
-  8: Give Way
-  9: One Way
-  10: Roundabout
-  11: Railway Crossing
-  12: Road Work
-  13: Narrow Road
-  14: Speed Limit 20
-  15: Speed Limit 30
-  16: Speed Limit 40
-  17: Speed Limit 50
-  18: Speed Limit 60
-  19: Speed Limit 80
+  0: First Aid Post
+  1: Children Crossing
+  2: Winding Road Right
+  3: Winding Road Left
+  4: Stop
+  5: No Right Turn
+  6: No Left Turn
+  7: No Stopping
+  8: No Entry
+  9: No Overtaking
+  10: No Parking
+  11: No U-Turn
+  12: Church
+  13: Danger
+  14: Roundabout
+  15: Cycle Track
+  16: Speed Limit 30
+  17: Speed Limit 40
+  18: Keep Left
+  19: Traffic Light
+  20: Weight Limit 10t
+  21: Mosque
+  22: Bus Stop
+  23: Pedestrian Crossing
+  24: Railway Crossing
+  25: Pedestrian Path
+  26: T-Intersection
+  27: Side Road Right
+  28: Side Road Left
+  29: Y-Intersection
+  30: Crossroads
+  31: Pass Either Side
+  32: Speed Hump
+  33: Petrol Pump
+  34: U-Turn
+  35: Hospital
+  36: Parking
+  37: Double Bend Right
+  38: Double Bend Left
+  39: Right Bend
 
-# Mapping from common dataset label names to our standardized class names
-label_mapping:
-  # GTSRB / generic
-  "stop": Stop
-  "Stop": Stop
-  "stop sign": Stop
-  "no entry": No Entry
-  "No Entry": No Entry
-  "no-entry": No Entry
-  "turn left": Left Turn
-  "Left Turn": Left Turn
-  "left turn": Left Turn
-  "turn right": Right Turn
-  "Right Turn": Right Turn
-  "right turn": Right Turn
-  "u-turn": U-Turn
-  "U-Turn": U-Turn
-  "u turn": U-Turn
-  "no horn": No Horn
-  "No Horn": No Horn
-  "school zone": School Zone
-  "School Zone": School Zone
-  "school": School Zone
-  "pedestrian crossing": Pedestrian Crossing
-  "Pedestrian Crossing": Pedestrian Crossing
-  "crosswalk": Pedestrian Crossing
-  "give way": Give Way
-  "Give Way": Give Way
-  "yield": Give Way
-  "one way": One Way
-  "One Way": One Way
-  "roundabout": Roundabout
-  "Roundabout": Roundabout
-  "railway crossing": Railway Crossing
-  "Railway Crossing": Railway Crossing
-  "railroad crossing": Railway Crossing
-  "road work": Road Work
-  "Road Work": Road Work
-  "construction": Road Work
-  "narrow road": Narrow Road
-  "Narrow Road": Narrow Road
-  "speed limit 20": Speed Limit 20
-  "Speed Limit 20": Speed Limit 20
-  "speed limit 30": Speed Limit 30
-  "Speed Limit 30": Speed Limit 30
-  "speed limit 40": Speed Limit 40
-  "Speed Limit 40": Speed Limit 40
-  "speed limit 50": Speed Limit 50
-  "Speed Limit 50": Speed Limit 50
-  "speed limit 60": Speed Limit 60
-  "Speed Limit 60": Speed Limit 60
-  "speed limit 80": Speed Limit 80
-  "Speed Limit 80": Speed Limit 80
-  # Mapillary common labels
-  "regulatory--stop--g1": Stop
-  "regulatory--no-entry--g1": No Entry
-  "warning--pedestrians-crossing--g1": Pedestrian Crossing
-  "regulatory--yield--g1": Give Way
-  "regulatory--one-way-left--g1": One Way
-  "regulatory--one-way-right--g1": One Way
-  "warning--roundabout--g1": Roundabout
-  "warning--railroad-crossing--g1": Railway Crossing
-  "warning--roadworks--g1": Road Work
-  "regulatory--maximum-speed-limit-20--g1": Speed Limit 20
-  "regulatory--maximum-speed-limit-30--g1": Speed Limit 30
-  "regulatory--maximum-speed-limit-40--g1": Speed Limit 40
-  "regulatory--maximum-speed-limit-50--g1": Speed Limit 50
-  "regulatory--maximum-speed-limit-60--g1": Speed Limit 60
-  "regulatory--maximum-speed-limit-80--g1": Speed Limit 80
+# No label mapping needed since the dataset is imported directly with YOLO class IDs aligned to the classes above
+label_mapping: {}
