@@ -3,9 +3,10 @@
 training:
   model: yolo11n.pt
   data: data/processed/dataset.yaml
-  epochs: 150
-  patience: 25
-  batch: 16
+  epochs: 50
+  patience: 10
+  batch: 64
+  cache: true
   imgsz: 640
   device: 0
   workers: 4
