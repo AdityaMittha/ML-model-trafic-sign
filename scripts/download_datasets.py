@@ -17,16 +17,29 @@ DATA_RAW = PROJECT_ROOT / "data" / "raw"
 def download_kaggle_dataset(dataset: str, output_dir: Path) -> bool:
   output_dir.mkdir(parents=True, exist_ok=True)
   try:
-    subprocess.run(
-      [sys.executable, "-m", "kaggle", "datasets", "download", "-d", dataset, "-p", str(output_dir), "--unzip"],
-      check=True,
-    )
-    logger.info("Kaggle dataset downloaded to %s", output_dir)
+    import kagglehub
+    import shutil
+    logger.info("Downloading dataset '%s' via kagglehub...", dataset)
+    downloaded_path = kagglehub.dataset_download(dataset)
+    logger.info("Dataset downloaded to cache: %s", downloaded_path)
+    
+    # Copy files from cache to output_dir
+    cache_dir = Path(downloaded_path)
+    for item in cache_dir.glob("*"):
+      dest = output_dir / item.name
+      if item.is_dir():
+        if dest.exists():
+          shutil.rmtree(dest)
+        shutil.copytree(item, dest)
+      else:
+        shutil.copy2(item, dest)
+        
+    logger.info("Dataset files successfully copied to %s", output_dir)
     return True
-  except (subprocess.CalledProcessError, FileNotFoundError) as e:
+  except Exception as e:
     logger.error("Kaggle download failed: %s", e)
     logger.info(
-      "Install kaggle CLI and configure ~/.kaggle/kaggle.json with API credentials."
+      "Please set KAGGLE_API_TOKEN environment variable or configure ~/.kaggle/access_token."
     )
     return False
 

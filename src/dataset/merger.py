@@ -295,12 +295,20 @@ class DatasetMerger:
 
     # Import Indonesia Traffic Sign Dataset
     indonesia_path = sources.get("indonesia_traffic_sign", raw_base / "indonesia_traffic_sign")
+    imported_count = 0
     if indonesia_path.exists():
       for split in ("train", "valid", "test"):
         img_sub = indonesia_path / split / "images"
         lbl_sub = indonesia_path / split / "labels"
         if img_sub.exists() and lbl_sub.exists():
-          self.import_yolo_dataset(img_sub, lbl_sub, staging_img, staging_lbl, f"indo_{split}")
+          imported_count += self.import_yolo_dataset(img_sub, lbl_sub, staging_img, staging_lbl, f"indo_{split}")
+
+    if imported_count == 0:
+      raise FileNotFoundError(
+        f"No raw images imported from {indonesia_path}! "
+        "Please ensure the dataset was successfully downloaded and unzipped. "
+        "Run: python scripts/download_datasets.py --kaggle"
+      )
 
     self.cleaner.clean_dataset(staging_img, staging_lbl, remove_duplicates=False, remove_corrupted=False, validate_labels=False)
 

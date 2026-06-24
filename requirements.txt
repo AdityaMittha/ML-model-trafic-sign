@@ -18,3 +18,4 @@ onnxruntime>=1.15.0
 tensorboard>=2.14.0
 imagehash>=4.3.1
 kaggle>=1.5.16
+kagglehub>=0.2.0
