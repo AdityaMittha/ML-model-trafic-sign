@@ -1,9 +1,0 @@
-{
-  "recommended_format": "pytorch",
-  "rationale": "For Raspberry Pi 4/5 deployment, ONNX with ONNX Runtime is recommended: smaller than PyTorch runtime, faster than TFLite for YOLO on ARM with NEON, and supports FP16 quantization. TFLite INT8 is alternative for Pi 4 with limited RAM. PyTorch (.pt) best for development and Colab only.",
-  "pi4_notes": "Pi 4 (4GB): Use ONNX FP16 or TFLite INT8, imgsz=416, expect 8-15 FPS. Pi 5 (8GB): Use ONNX FP32, imgsz=640, expect 15-25 FPS with YOLOv11n.",
-  "scores": {
-    "pytorch": 50.970835249042146,
-    "onnx": 11.076667324777887
-  }
-}
