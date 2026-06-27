@@ -135,10 +135,21 @@ class TrafficSignDetector:
     if not video.open():
       raise RuntimeError(f"Cannot open source: {source}")
 
+    # GPU warm-up: run a dummy inference to initialize CUDA context
+    # This avoids the ~1-2s cold start penalty on the first real frame
+    ret, warmup_frame = video.read()
+    if ret:
+      logger.info("Warming up GPU with first frame...")
+      _ = self.detect_frame(warmup_frame)
+      self._fps_history.clear()
+      self._latency_history.clear()
+      logger.info("GPU warm-up complete. Starting real-time inference.")
+
     writer = None
     all_detections: List[Dict] = []
     frame_count = 0
     session_start = time.perf_counter()
+    consecutive_failures = 0
 
     try:
       while True:
@@ -147,7 +158,12 @@ class TrafficSignDetector:
 
         ret, frame = video.read()
         if not ret:
-          break
+          consecutive_failures += 1
+          if consecutive_failures > 30:
+            logger.warning("Too many consecutive frame read failures, stopping.")
+            break
+          continue
+        consecutive_failures = 0
 
         frame_start = time.perf_counter()
         detections = self.detect_frame(frame)
