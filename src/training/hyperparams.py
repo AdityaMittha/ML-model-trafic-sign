@@ -10,7 +10,7 @@ class HyperparamConfig:
 
   lr0: float = 0.001
   batch: int = 16
-  epochs: int = 150
+  epochs: int = 25
   weight_decay: float = 0.0005
   imgsz: int = 640
   confidence: float = 0.45

@@ -19,7 +19,7 @@ def main():
   parser = argparse.ArgumentParser(description="Train traffic sign YOLO model")
   parser.add_argument("--model", type=str, default="yolo11n.pt", help="Base model weights")
   parser.add_argument("--data", type=str, default=str(DATA_DIR / "processed" / "dataset.yaml"))
-  parser.add_argument("--epochs", type=int, default=150)
+  parser.add_argument("--epochs", type=int, default=25)
   parser.add_argument("--batch", type=int, default=16)
   parser.add_argument("--imgsz", type=int, default=640)
   parser.add_argument("--device", type=str, default="0")

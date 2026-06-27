@@ -41,7 +41,9 @@ class VideoSource:
 
       self.cap = cv2.VideoCapture(str(path))
     else:
-      self.cap = cv2.VideoCapture(int(self.source))
+      import platform
+      backend = cv2.CAP_DSHOW if platform.system() == "Windows" else cv2.CAP_ANY
+      self.cap = cv2.VideoCapture(int(self.source), backend)
 
     if self.cap is None or not self.cap.isOpened():
       logger.error("Failed to open source: %s", self.source)

@@ -3,13 +3,13 @@
 training:
   model: yolo11n.pt
   data: data/processed/dataset.yaml
-  epochs: 50
+  epochs: 25
   patience: 10
-  batch: 64
-  cache: true
+  batch: 16
+  cache: disk
   imgsz: 640
   device: 0
-  workers: 4
+  workers: 2
   project: outputs/training
   name: traffic_sign_yolo11n
   exist_ok: true
